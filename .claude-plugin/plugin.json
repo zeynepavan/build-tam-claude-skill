@@ -1,0 +1,10 @@
+{
+  "name": "build-tam",
+  "description": "Turn a handful of closed-won accounts into a ranked, contactable TAM using the CompanyEnrich MCP. Seven-stage pipeline: segment -> reverse-engineer ICP -> lookalike expansion -> A/B/C tier scoring -> workforce-signal ranking -> decision makers -> work emails. Airtable optional; CSV fallback built in.",
+  "version": "1.0.0",
+  "author": {
+    "name": "CompanyEnrich"
+  },
+  "homepage": "https://companyenrich.com",
+  "keywords": ["tam", "gtm", "lookalike", "icp", "prospecting", "companyenrich", "sales", "revops"]
+}

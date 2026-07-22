@@ -1,0 +1,14 @@
+{
+  "name": "build-tam",
+  "owner": {
+    "name": "CompanyEnrich",
+    "url": "https://companyenrich.com"
+  },
+  "plugins": [
+    {
+      "name": "build-tam",
+      "source": "./",
+      "description": "Turn closed-won accounts into a ranked, contactable TAM with the CompanyEnrich MCP. Seven-stage lookalike + workforce-signal pipeline; Airtable optional, CSV fallback built in."
+    }
+  ]
+}

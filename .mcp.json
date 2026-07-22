@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "companyenrich": {
+      "type": "http",
+      "url": "https://mcp.companyenrich.com/mcp"
+    }
+  }
+}

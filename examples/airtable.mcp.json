@@ -1,0 +1,13 @@
+{
+  "_comment": "OPTIONAL. Merge this server into your .mcp.json (or ~/.claude.json) to store the pipeline in Airtable instead of CSV. Set AIRTABLE_API_KEY to a personal access token with data.records:read/write + schema.bases:read/write on the target base.",
+  "mcpServers": {
+    "airtable": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "airtable-mcp-server"],
+      "env": {
+        "AIRTABLE_API_KEY": "${AIRTABLE_API_KEY}"
+      }
+    }
+  }
+}

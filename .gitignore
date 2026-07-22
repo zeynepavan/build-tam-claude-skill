@@ -1,0 +1,22 @@
+# pipeline run artifacts
+tam-run/
+tool-results/
+*.local.csv
+
+# never commit secrets or personal config
+.env
+.claude.json
+*.pat
+airtable_pat*
+
+# python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# os / editor
+.DS_Store
+*.swp
+.idea/
+.vscode/
