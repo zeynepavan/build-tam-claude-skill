@@ -13,6 +13,8 @@ Closed-Won Deals  ->  Reverse-Engineered ICP  ->  TAM Full (lookalike)  ->  Tier
 
 Runs inside Claude Code as a skill + seven slash commands. Structure it in Airtable, or fall back to CSV with zero extra setup.
 
+> New here? Read the **[guide](docs/GUIDE.md)** first - a short, plain-language walkthrough of what this does and how the process works.
+
 ---
 
 ## Requirements
