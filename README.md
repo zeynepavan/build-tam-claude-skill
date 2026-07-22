@@ -33,7 +33,9 @@ CompanyEnrich runs on credits, and your spend depends on how big your market is 
 | People search | 2 credits per person |
 | Resolve a work email | 10 credits per email found (misses are free) |
 
-Sizing is cheap and fixed; everything after scales with how many rows *you* choose to materialize and contact. Narrow before the people and email stages. Full credit table in the skill.
+Sizing is cheap and fixed; everything after scales with how many rows *you* choose to materialize and contact. Narrow before the people and email stages.
+
+Current per-operation rates and plan pricing (e.g. Starter $49/mo for 5,000 credits): **[companyenrich.com/pricing](https://companyenrich.com/pricing)** - the authoritative source; the rates above mirror it.
 
 ---
 
