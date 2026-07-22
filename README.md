@@ -24,7 +24,16 @@ Runs inside Claude Code as a skill + seven slash commands. Structure it in Airta
 | **Airtable MCP** | **optional** - nicer storage with live A/B/C views. Without it, every stage writes CSVs under `./tam-run/`. See [Storage](#storage) |
 | **Python 3** | for the bulk-load / growth scripts in `scripts/` (stdlib only, no pip) |
 
-CompanyEnrich runs on credits. A full end-to-end run on ~1,600 companies (size the market, materialize the top few hundred, tier, rank, find ~120 buyers, resolve ~35 emails) costs on the order of **5,000 credits**. Sizing the market alone is 5 credits. See the credit table in the skill.
+CompanyEnrich runs on credits, and your spend depends on how big your market is and how far down it you pull - so budget from the fixed per-unit costs, not from any one run's total:
+
+| Action | Cost |
+|---|---|
+| Size the market (a `pageSize:1` count) | 5 credits, flat - do this first |
+| Materialize a company | 5 credits (+5 with workforce data) |
+| People search | 2 credits per person |
+| Resolve a work email | 10 credits per email found (misses are free) |
+
+Sizing is cheap and fixed; everything after scales with how many rows *you* choose to materialize and contact. Narrow before the people and email stages. Full credit table in the skill.
 
 ---
 
