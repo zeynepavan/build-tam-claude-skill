@@ -13,7 +13,9 @@ Steps:
    - or `top20` = only people at the top-20 workforce-growth accounts.
    Confirm the count and rough credit cost (10 credits per *found* email; ~55-60% hit rate) before spending.
 2. Call `enrich_person_email(id=<PersonID>, domain=<Domain>)` in big batches (~30/turn, not 5). Collect `status:found` emails; not-found is free.
-3. Upsert emails back into the People table by PersonID using the Airtable REST PATCH with `performUpsert.fieldsToMergeOn` (NOT `fieldIdsToMergeOn`). See the skill's `upsert_emails.py` pattern.
+3. Write the emails back onto the People rows, keyed by PersonID:
+   - **Airtable:** upsert with `scripts/airtable_load.py <base> <table> emails.json --upsert PersonID` (REST PATCH, key is `fieldsToMergeOn` NOT `fieldIdsToMergeOn`).
+   - **CSV:** fill the `Email` / `Email Status` columns in `./tam-run/<segment>-people.csv` for the matched PersonIDs.
 4. Report: emails found / attempted, companies covered, credits spent.
 
 This is the finish line: the TAM is now a named, contactable, prioritized list. Optional next: hand the top accounts to `/write-sequence` for cold email.
