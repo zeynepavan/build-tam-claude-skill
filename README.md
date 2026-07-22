@@ -32,7 +32,7 @@ CompanyEnrich runs on credits. A full end-to-end run on ~1,600 companies (size t
 
 ### As a plugin (recommended)
 ```
-/plugin marketplace add <your-org>/build-tam
+/plugin marketplace add zeynepavan/build-tam-skill
 /plugin install build-tam
 ```
 This wires up the CompanyEnrich MCP and all seven commands together. On first use Claude Code opens the CompanyEnrich OAuth login.
