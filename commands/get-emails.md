@@ -14,8 +14,8 @@ Steps:
    Confirm the count and rough credit cost (10 credits per *found* email; ~55-60% hit rate) before spending.
 2. Call `enrich_person_email(id=<PersonID>, domain=<Domain>)` in big batches (~30/turn, not 5). Collect `status:found` emails; not-found is free.
 3. Write the emails back onto the People rows, keyed by PersonID:
-   - **Airtable:** upsert with `scripts/airtable_load.py <base> <table> emails.json --upsert PersonID` (REST PATCH, key is `fieldsToMergeOn` NOT `fieldIdsToMergeOn`).
+   - **Airtable:** upsert with `python <scripts dir>/airtable_load.py <base> <table> emails.json --upsert PersonID`, where `<scripts dir>` is `${CLAUDE_PLUGIN_ROOT}/scripts` for a plugin install or `~/.claude/skills/build-tam/scripts` for a manual one (REST PATCH, key is `fieldsToMergeOn` NOT `fieldIdsToMergeOn`).
    - **CSV:** fill the `Email` / `Email Status` columns in `./tam-run/<segment>-people.csv` for the matched PersonIDs.
 4. Report: emails found / attempted, companies covered, credits spent.
 
-This is the finish line: the TAM is now a named, contactable, prioritized list. Optional next: hand the top accounts to `/write-sequence` for cold email.
+This is the finish line: the TAM is now a named, contactable, prioritized list, ready to hand to your outreach tool or cold-email workflow.

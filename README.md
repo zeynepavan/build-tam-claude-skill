@@ -35,15 +35,16 @@ CompanyEnrich runs on credits, and your spend scales with how big your market is
 ### As a plugin (recommended)
 ```
 /plugin marketplace add zeynepavan/build-tam-claude-skill
-/plugin install build-tam
+/plugin install build-tam@build-tam
 ```
 This wires up the CompanyEnrich MCP and all seven commands together. On first use Claude Code opens the CompanyEnrich OAuth login.
 
 ### Manual (guaranteed to work anywhere)
-Copy the two component dirs into your Claude config, and add the MCP server:
+Copy the skill, commands and scripts into your Claude config, and add the MCP server:
 ```
 cp -r skills/build-tam   ~/.claude/skills/
 cp    commands/*.md      ~/.claude/commands/
+cp -r scripts            ~/.claude/skills/build-tam/
 ```
 Then add the CompanyEnrich server from `.mcp.json` to your `~/.claude.json` (or project `.mcp.json`).
 
@@ -81,7 +82,7 @@ Or run the whole thing in one shot: ask Claude to **"use the build-tam skill"** 
 Pick one backend at Stage 1 and keep it:
 
 - **Airtable** (if the MCP is connected) - tables persist as shared state between stages, and you get filtered Hot/Warm/Nurture views in the UI. Note: the API can't create grid views, so you add the A/B/C filtered views yourself (one table, three lenses).
-- **CSV** (default when Airtable is absent) - each stage writes `./tam-run/<segment>-<stage>.csv`. Identical compute, local files.
+- **CSV** (default when Airtable is absent) - each stage writes `./tam-run/<segment>-<stage>.csv` (the exact file names are listed in the skill's Storage section). Identical compute, local files.
 
 The big `find_similar_companies` / `search_people` responses land as JSON under `tool-results/` either way; `scripts/` parses them.
 
@@ -89,7 +90,7 @@ The big `find_similar_companies` / `search_people` responses land as JSON under 
 
 ## Scripts
 
-Stdlib-only Python for the parts worth doing outside the assistant loop. Auth reads `$AIRTABLE_API_KEY` or the airtable MCP env in `~/.claude.json`.
+Stdlib-only Python for the parts worth doing outside the assistant loop. Auth reads `$AIRTABLE_API_KEY` or the airtable MCP env in `~/.claude.json` (user- or project-scoped). The paths below are relative to this repo; after a plugin install the scripts live in the plugin's `scripts/` dir, and after a manual install in `~/.claude/skills/build-tam/scripts/`.
 
 ```
 # bulk-load rows into Airtable (retry + verify; use for >50 rows)
@@ -98,8 +99,8 @@ python scripts/airtable_load.py <baseId> <tableId> records.json
 # upsert by a key column (idempotent - re-run a half-finished load safely)
 python scripts/airtable_load.py <baseId> <tableId> records.json --upsert PersonID
 
-# rank A+B accounts by workforce growth from saved tool-results -> CSV
-python scripts/compute_growth.py tool-results/* --min-score 0.8 --out tam-run/by-workforce.csv
+# rank A+B accounts by workforce growth from the saved minScore=0.8 + includeWorkforce pull -> CSV
+python scripts/compute_growth.py tool-results/* --out tam-run/<segment>-by-workforce.csv
 ```
 
 ---

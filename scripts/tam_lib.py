@@ -28,10 +28,13 @@ def get_airtable_pat():
     cfg = os.path.expanduser("~/.claude.json")
     if os.path.exists(cfg):
         d = json.load(open(cfg))
-        srv = d.get("mcpServers", {}).get("airtable", {})
-        pat = srv.get("env", {}).get("AIRTABLE_API_KEY")
-        if pat:
-            return pat
+        # user-scoped servers first, then project/local-scoped ones
+        scopes = [d.get("mcpServers", {})]
+        scopes += [p.get("mcpServers", {}) for p in (d.get("projects") or {}).values()]
+        for servers in scopes:
+            pat = (servers.get("airtable") or {}).get("env", {}).get("AIRTABLE_API_KEY")
+            if pat:
+                return pat
     raise SystemExit("No Airtable PAT. Set AIRTABLE_API_KEY or add the airtable MCP server.")
 
 
@@ -135,11 +138,21 @@ def compute_growth(workforce, days=365, tol_days=120):
 def load_items(paths):
     """Dedupe CompanyEnrich items by id across one or more saved tool-results JSON files.
     Returns {id: {'score': float|None, 'item': {...}}}. `totalItems` is stable across
-    pages, so the first file tells you the market size."""
+    pages, so the first file tells you the market size.
+    Files that don't parse as JSON, or whose items aren't companies (e.g. search_people
+    dumps), are skipped so they can't crash the run or mix people into company rows."""
     rows = {}
     for path in paths:
-        d = json.load(open(path))
+        try:
+            d = json.load(open(path))
+        except (ValueError, UnicodeDecodeError):
+            continue
+        items = d.get("items") if isinstance(d, dict) else None
+        if not isinstance(items, list):
+            continue
         scores = (d.get("metadata") or {}).get("scores", {})
-        for it in d.get("items", []):
+        for it in items:
+            if not isinstance(it, dict) or "id" not in it or "domain" not in it or "experiences" in it:
+                continue
             rows.setdefault(it["id"], {"score": scores.get(it["id"]), "item": it})
     return rows
